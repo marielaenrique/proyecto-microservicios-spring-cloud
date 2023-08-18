@@ -12,7 +12,7 @@ import java.util.List;
 
 @FeignClient(name = "movie-service")
 public interface IMovieClient {
-    @GetMapping("/{genre}")
+    @GetMapping("/api/v1/movies/{genre}")
     ResponseEntity<List<Movie>> getMovieByGenre(@PathVariable String genre);
 
     @PostMapping("/save")
