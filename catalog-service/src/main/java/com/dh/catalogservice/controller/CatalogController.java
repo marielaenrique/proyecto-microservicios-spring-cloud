@@ -1,6 +1,7 @@
 package com.dh.catalogservice.controller;
 
 import com.dh.catalogservice.model.Movie;
+import com.dh.catalogservice.model.Serie;
 import com.dh.catalogservice.service.CatalogService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +25,12 @@ public class CatalogController {
     public ResponseEntity<Movie> saveMovie(@RequestBody Movie movie){
         return catalogService.saveMovie(movie);
     }
+
+    @GetMapping("/catalog/serie/{genre}")
+    public List<Serie> getSerieByGenre(@PathVariable String genre) { return catalogService.getSerieByGenre(genre); }
+
+    @PostMapping("/catalog/serie/save")
+    public String create(@RequestBody Serie serie) { return catalogService.create(serie); }
 
 
 
