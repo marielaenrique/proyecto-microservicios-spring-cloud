@@ -51,4 +51,12 @@ public class CatalogService {
         return iSerieRepository.save(serie);
     }
 
+    public List<Movie> findMovieByGenreMongo(String genre) {
+        return iMovieRepository.findByGenre(genre);
+    }
+
+    public List<Serie> findSerieByGenreMongo(String genre) {
+        return iSerieRepository.findByGenre(genre);
+    }
+
 }

@@ -49,4 +49,15 @@ public class CatalogController {
     }
 
 
+    @GetMapping("/movie/{genre}")
+    public List<Movie> getMovieByGenreMongo(@PathVariable String genre){
+        return catalogService.findMovieByGenreMongo(genre);
+    }
+
+    @GetMapping("/serie/{genre}")
+    public List<Serie> getSerieByGenreMongo(@PathVariable String genre){
+        return catalogService.findSerieByGenreMongo(genre);
+    }
+
+
 }
