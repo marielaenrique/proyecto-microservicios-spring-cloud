@@ -10,7 +10,7 @@ import org.springframework.data.mongodb.core.mapping.MongoId;
 @RequiredArgsConstructor
 public class Serie {
     @MongoId
-    private Long Id;
+    private String Id;
     private String name;
     private String genre;
 
