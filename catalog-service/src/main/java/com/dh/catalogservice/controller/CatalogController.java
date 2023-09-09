@@ -2,20 +2,24 @@ package com.dh.catalogservice.controller;
 
 import com.dh.catalogservice.model.Movie;
 import com.dh.catalogservice.model.Serie;
+import com.dh.catalogservice.queue.MovieListener;
+import com.dh.catalogservice.queue.SerieListener;
 import com.dh.catalogservice.service.CatalogService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@RefreshScope
 @RestController
+@RequiredArgsConstructor
 public class CatalogController {
 
     private final CatalogService catalogService;
-
-    public CatalogController(CatalogService catalogService) {
-        this.catalogService = catalogService;
-    }
+    private final MovieListener movieListener;
+    private final SerieListener serieListener;
 
     @GetMapping("/catalog/movie/{genre}")
     public ResponseEntity<List<Movie>> getMovieByGenre(@PathVariable String genre){
@@ -32,9 +36,17 @@ public class CatalogController {
     @PostMapping("/catalog/serie/save")
     public String create(@RequestBody Serie serie) { return catalogService.create(serie); }
 
+    @PostMapping("/movie/save")
+    public ResponseEntity<Movie> saveMovieMongo(@RequestBody Movie movie) {
+        movieListener.receive(movie);
+        return ResponseEntity.noContent().build();
+    }
 
-
-
+    @PostMapping("/serie/save")
+    public ResponseEntity<Serie> saveSerieMongo(@RequestBody Serie serie) {
+        serieListener.receive(serie);
+        return ResponseEntity.noContent().build();
+    }
 
 
 }

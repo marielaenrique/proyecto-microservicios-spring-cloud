@@ -4,12 +4,10 @@ import com.dh.catalogservice.feign.IMovieClient;
 import com.dh.catalogservice.feign.ISerieClient;
 import com.dh.catalogservice.model.Movie;
 import com.dh.catalogservice.model.Serie;
+import com.dh.catalogservice.repository.IMovieRepository;
+import com.dh.catalogservice.repository.ISerieRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -20,9 +18,16 @@ public class CatalogService {
 
     private final ISerieClient iSerieClient;
 
-    public CatalogService(IMovieClient iMovieClient, ISerieClient iSerieClient) {
+    private final IMovieRepository iMovieRepository;
+
+    private final ISerieRepository iSerieRepository;
+
+    public CatalogService(IMovieClient iMovieClient, ISerieClient iSerieClient, IMovieRepository iMovieRepository,
+                          ISerieRepository iSerieRepository) {
         this.iMovieClient = iMovieClient;
         this.iSerieClient = iSerieClient;
+        this.iMovieRepository = iMovieRepository;
+        this.iSerieRepository = iSerieRepository;
     }
 
     public ResponseEntity<List<Movie>> getMovieByGenre(String genre){
@@ -37,5 +42,13 @@ public class CatalogService {
     public List<Serie> getSerieByGenre(String genre) { return iSerieClient.getSerieByGenre(genre); }
 
     public String create(Serie serie) { return iSerieClient.create(serie); }
+
+    public Movie saveMovieMongo(Movie movie) {
+        return iMovieRepository.save(movie);
+    }
+
+    public Serie saveSerieMongo(Serie serie) {
+        return iSerieRepository.save(serie);
+    }
 
 }
