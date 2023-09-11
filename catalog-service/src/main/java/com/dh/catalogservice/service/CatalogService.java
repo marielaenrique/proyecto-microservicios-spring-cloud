@@ -6,12 +6,14 @@ import com.dh.catalogservice.model.Movie;
 import com.dh.catalogservice.model.Serie;
 import com.dh.catalogservice.repository.IMovieRepository;
 import com.dh.catalogservice.repository.ISerieRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class CatalogService {
 
     private final IMovieClient iMovieClient;
@@ -21,14 +23,6 @@ public class CatalogService {
     private final IMovieRepository iMovieRepository;
 
     private final ISerieRepository iSerieRepository;
-
-    public CatalogService(IMovieClient iMovieClient, ISerieClient iSerieClient, IMovieRepository iMovieRepository,
-                          ISerieRepository iSerieRepository) {
-        this.iMovieClient = iMovieClient;
-        this.iSerieClient = iSerieClient;
-        this.iMovieRepository = iMovieRepository;
-        this.iSerieRepository = iSerieRepository;
-    }
 
     public ResponseEntity<List<Movie>> getMovieByGenre(String genre){
         return iMovieClient.getMovieByGenre(genre);

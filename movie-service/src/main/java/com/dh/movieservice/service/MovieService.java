@@ -26,8 +26,9 @@ public class MovieService {
         return movieRepository.findByGenre(genre);
     }
 
-    public Movie save(Movie movie) {
+    public String save(Movie movie) {
+        movieRepository.save(movie);
         movieSender.send(movie);
-        return movieRepository.save(movie);
+        return movie.getName();
     }
 }

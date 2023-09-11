@@ -25,9 +25,12 @@ public class CatalogController {
     public ResponseEntity<List<Movie>> getMovieByGenre(@PathVariable String genre){
         return catalogService.getMovieByGenre(genre);
     }
-    @PostMapping("/catalog/movie/save")
-    public ResponseEntity<Movie> saveMovie(@RequestBody Movie movie){
-        return catalogService.saveMovie(movie);
+
+    @PostMapping("catalog/movie/save")
+    public ResponseEntity<Movie> saveMovie(@RequestBody Movie movie) {
+        catalogService.saveMovie(movie);
+        movieListener.receive(movie);
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/catalog/serie/{genre}")
@@ -36,11 +39,6 @@ public class CatalogController {
     @PostMapping("/catalog/serie/save")
     public String create(@RequestBody Serie serie) { return catalogService.create(serie); }
 
-    @PostMapping("/movie/save")
-    public ResponseEntity<Movie> saveMovieMongo(@RequestBody Movie movie) {
-        movieListener.receive(movie);
-        return ResponseEntity.noContent().build();
-    }
 
     @PostMapping("/serie/save")
     public ResponseEntity<Serie> saveSerieMongo(@RequestBody Serie serie) {

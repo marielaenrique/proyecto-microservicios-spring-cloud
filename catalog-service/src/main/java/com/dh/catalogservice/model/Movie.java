@@ -6,7 +6,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 
 @Data
-@Document
+@Document(collection = "Movies")
 @RequiredArgsConstructor
 public class Movie {
     @MongoId
