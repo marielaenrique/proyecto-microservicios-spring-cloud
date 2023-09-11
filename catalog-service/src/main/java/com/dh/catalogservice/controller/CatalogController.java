@@ -26,7 +26,7 @@ public class CatalogController {
         return catalogService.getMovieByGenre(genre);
     }
 
-    @PostMapping("catalog/movie/save")
+    @PostMapping("/movie/save")
     public ResponseEntity<Movie> saveMovie(@RequestBody Movie movie) {
         catalogService.saveMovie(movie);
         movieListener.receive(movie);
