@@ -35,6 +35,6 @@ public class SerieController {
     @ResponseStatus(HttpStatus.CREATED)
     public String create(@RequestBody Serie serie) {
         serieService.create(serie);
-        return serie.getId();
+        return serie.getName();
     }
 }

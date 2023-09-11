@@ -33,6 +33,6 @@ public class SerieService {
     public String create(Serie serie) {
         repository.save(serie);
         sender.send(serie);
-        return serie.getId();
+        return serie.getName();
     }
 }
