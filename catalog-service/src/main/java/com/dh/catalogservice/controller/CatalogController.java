@@ -41,17 +41,15 @@ public class CatalogController {
         return catalogService.findSerieByGenreMongo(genre);
     }
 
-    @PostMapping("/catalog/serie/save")
-    public String create(@RequestBody Serie serie) { return catalogService.create(serie); }
-
     @PostMapping("/serie/save")
-    public ResponseEntity<Serie> saveSerieMongo(@RequestBody Serie serie) {
+    public ResponseEntity<Serie> saveSerie(@RequestBody Serie serie) {
         serieListener.receive(serie);
         return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/genre/{genre}")
-    public ResponseEntity<List<Object>> getGenre(@PathVariable String genre) {
-        return ResponseEntity.ok(catalogService.getGenreItems(genre));
+    public Genre getGenre(@PathVariable String genre) {
+        return catalogService.getGenre(genre);
     }
+
 }
