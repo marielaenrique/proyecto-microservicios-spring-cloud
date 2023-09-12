@@ -1,6 +1,5 @@
 package com.dh.catalogservice.queue;
 
-import com.dh.catalogservice.model.Movie;
 import com.dh.catalogservice.model.Serie;
 import com.dh.catalogservice.service.CatalogService;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
