@@ -1,5 +1,6 @@
 package com.dh.catalogservice.controller;
 
+import com.dh.catalogservice.model.Genre;
 import com.dh.catalogservice.model.Movie;
 import com.dh.catalogservice.model.Serie;
 import com.dh.catalogservice.queue.MovieListener;
@@ -10,6 +11,7 @@ import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RefreshScope
@@ -21,9 +23,10 @@ public class CatalogController {
     private final MovieListener movieListener;
     private final SerieListener serieListener;
 
-    @GetMapping("/catalog/movie/{genre}")
-    public ResponseEntity<List<Movie>> getMovieByGenre(@PathVariable String genre){
-        return catalogService.getMovieByGenre(genre);
+
+    @GetMapping("/movie/{genre}")
+    public List<Movie> getMovieByGenreMongo(@PathVariable String genre){
+        return catalogService.findMovieByGenreMongo(genre);
     }
 
     @PostMapping("/movie/save")
@@ -33,12 +36,13 @@ public class CatalogController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/catalog/serie/{genre}")
-    public List<Serie> getSerieByGenre(@PathVariable String genre) { return catalogService.getSerieByGenre(genre); }
+    @GetMapping("/serie/{genre}")
+    public List<Serie> getSerieByGenreMongo(@PathVariable String genre){
+        return catalogService.findSerieByGenreMongo(genre);
+    }
 
     @PostMapping("/catalog/serie/save")
     public String create(@RequestBody Serie serie) { return catalogService.create(serie); }
-
 
     @PostMapping("/serie/save")
     public ResponseEntity<Serie> saveSerieMongo(@RequestBody Serie serie) {
@@ -46,16 +50,8 @@ public class CatalogController {
         return ResponseEntity.noContent().build();
     }
 
-
-    @GetMapping("/movie/{genre}")
-    public List<Movie> getMovieByGenreMongo(@PathVariable String genre){
-        return catalogService.findMovieByGenreMongo(genre);
+    @GetMapping("/genre/{genre}")
+    public ResponseEntity<List<Object>> getGenre(@PathVariable String genre) {
+        return ResponseEntity.ok(catalogService.getGenreItems(genre));
     }
-
-    @GetMapping("/serie/{genre}")
-    public List<Serie> getSerieByGenreMongo(@PathVariable String genre){
-        return catalogService.findSerieByGenreMongo(genre);
-    }
-
-
 }

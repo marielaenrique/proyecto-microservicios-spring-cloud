@@ -2,14 +2,19 @@ package com.dh.catalogservice.service;
 
 import com.dh.catalogservice.feign.IMovieClient;
 import com.dh.catalogservice.feign.ISerieClient;
+import com.dh.catalogservice.model.Genre;
 import com.dh.catalogservice.model.Movie;
 import com.dh.catalogservice.model.Serie;
+import com.dh.catalogservice.repository.IGenreRepository;
 import com.dh.catalogservice.repository.IMovieRepository;
 import com.dh.catalogservice.repository.ISerieRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -24,16 +29,11 @@ public class CatalogService {
 
     private final ISerieRepository iSerieRepository;
 
-    public ResponseEntity<List<Movie>> getMovieByGenre(String genre){
-        return iMovieClient.getMovieByGenre(genre);
-    }
+    private final IGenreRepository iGenreRepository;
 
     public ResponseEntity<Movie> saveMovie(Movie movie){
         return iMovieClient.saveMovie(movie);
     }
-
-
-    public List<Serie> getSerieByGenre(String genre) { return iSerieClient.getSerieByGenre(genre); }
 
     public String create(Serie serie) { return iSerieClient.create(serie); }
 
@@ -53,4 +53,13 @@ public class CatalogService {
         return iSerieRepository.findByGenre(genre);
     }
 
+    public List<Object> getGenreItems(String genre) {
+        List<Movie> movies = iMovieRepository.findByGenre(genre);
+        List<Serie> series = iSerieRepository.findByGenre(genre);
+        List<Object> genreItems = new ArrayList<>();
+        genreItems.addAll(movies);
+        genreItems.addAll(series);
+
+        return genreItems;
+    }
 }
