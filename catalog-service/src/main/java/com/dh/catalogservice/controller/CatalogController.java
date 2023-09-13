@@ -6,6 +6,7 @@ import com.dh.catalogservice.model.Serie;
 import com.dh.catalogservice.queue.MovieListener;
 import com.dh.catalogservice.queue.SerieListener;
 import com.dh.catalogservice.service.CatalogService;
+import com.dh.catalogservice.configuration.CircuitBreakerConfiguration;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.http.ResponseEntity;
@@ -14,12 +15,14 @@ import java.util.List;
 
 @RefreshScope
 @RestController
+@RequestMapping("/catalog")
 @RequiredArgsConstructor
 public class CatalogController {
 
     private final CatalogService catalogService;
     private final MovieListener movieListener;
     private final SerieListener serieListener;
+    private final CircuitBreakerConfiguration circuitBreakerConfiguration;
 
 
     @GetMapping("/movie/{genre}")
@@ -50,7 +53,7 @@ public class CatalogController {
         return catalogService.getGenre(genre);
     }
 
-    @GetMapping("/catalog/findAll")
+    @GetMapping("/findAll")
     public List<Movie> findAll() {
         return circuitBreakerConfiguration.findAll();
     }
