@@ -31,4 +31,12 @@ public class MovieService {
         movieSender.send(movie);
         return movie.getName();
     }
+
+    public List<Movie> findAll(Boolean throwError) {
+        if (throwError)
+            throw new RuntimeException();
+
+        return movieRepository.findAll();
+    }
+
 }

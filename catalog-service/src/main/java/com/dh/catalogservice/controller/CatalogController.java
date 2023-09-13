@@ -50,4 +50,9 @@ public class CatalogController {
         return catalogService.getGenre(genre);
     }
 
+    @GetMapping("/catalog/findAll")
+    public List<Movie> findAll() {
+        return circuitBreakerConfiguration.findAll();
+    }
+
 }

@@ -46,4 +46,8 @@ public class MovieController {
         return movie.getName();
     }
 
+    @GetMapping("/findAll")
+    public List<Movie> findAll(@RequestParam(defaultValue = "true") Boolean throwError) {
+        return movieService.findAll(throwError);
+    }
 }
