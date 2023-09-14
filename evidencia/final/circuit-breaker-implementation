@@ -1,0 +1,5 @@
+Se plantea agregar Circuit Breaker en el microservicio catalog, en un método que llama por Feign a todas las películas de la base de datos del microservicio movie.
+
+En caso de que éste se caiga, se devuelven las películas de la base de datos del microservicio catalog.
+
+En el método se implementó un parámetro booleano, con el fin de poder manipularlo para visualizar el funcionamiento del Circuit Breaker.

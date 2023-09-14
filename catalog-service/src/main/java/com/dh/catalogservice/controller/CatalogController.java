@@ -53,7 +53,7 @@ public class CatalogController {
         return catalogService.getGenre(genre);
     }
 
-    @GetMapping("/findAll")
+    @GetMapping("/movie-service/findAll")
     public List<Movie> findAll() {
         return circuitBreakerConfiguration.findAll();
     }
